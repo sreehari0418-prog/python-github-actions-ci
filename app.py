@@ -4,7 +4,7 @@ import json
 class AppHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         response = {
-            "message": "Python CI/CD pipeline is working fine!",
+            "message": "Python CI/CD pipeline is working!",
             "path": self.path,
             "status": "healthy"
         }
