@@ -183,7 +183,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/python-deployment \
-            python-deployment=infhari/python-ci-demo:${{ github.sha }}
+            python-container=infhari/python-ci-demo:${{ github.sha }}
 
       - name: Verify Deployment
         run: |
