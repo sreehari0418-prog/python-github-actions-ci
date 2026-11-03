@@ -178,6 +178,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
+    environment:
+      name: ${{ github.ref_name == 'develop' && 'development' || github.ref_name == 'main' && 'production' || 'staging' }}
     needs: [build, scan, publish]
     if: github.event_name == 'push'
 
