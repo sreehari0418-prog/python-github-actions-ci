@@ -174,18 +174,20 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "PR build and scan passed; Docker Hub publish skipped for PRs."
 
+
   deploy:
     name: Deploy
     runs-on: self-hosted
     needs: [build, scan, publish]
+    if: github.event_name == 'push'
 
     steps:
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/python-deployment \
-            python-container=infhari/python-ci-demo:${{ github.sha }}
+            python-container=${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ github.ref_name }}-${{ github.sha }}
 
       - name: Verify Deployment
         run: |
-          kubectl rollout status deployment/python-deployment
+          kubectl rollout status deployment/python-deployment --timeout=180s
 
