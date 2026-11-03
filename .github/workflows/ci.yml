@@ -182,10 +182,10 @@ jobs:
     steps:
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/python-app \
-            python-app=infhari/python-ci-demo:${{ github.sha }}
+          kubectl set image deployment/python-deployment \
+            python-deployment=infhari/python-ci-demo:${{ github.sha }}
 
       - name: Verify Deployment
         run: |
-          kubectl rollout status deployment/skillpulse
+          kubectl rollout status deployment/python-deployment
 
