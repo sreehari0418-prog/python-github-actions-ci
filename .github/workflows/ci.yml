@@ -182,6 +182,11 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
+      - name: Debug Docker image
+        run: |
+          echo "Username: ${{ secrets.DOCKERHUB_USERNAME }}"
+          echo "Repository: ${{ vars.DOCKERHUB_REPOSITORY }}"
+          echo "Tag: ${{ github.ref_name }}-${{ github.sha }}"
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/python-deployment \
