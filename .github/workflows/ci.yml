@@ -173,12 +173,14 @@ jobs:
       - name: PR validation notice
         if: github.event_name == 'pull_request'
         run: echo "PR build and scan passed; Docker Hub publish skipped for PRs."
-  Deploy:
-    name: deploy
+
+  deploy:
+    name: Deploy
     runs-on: self-hosted
-    needs: [build,scan,publish]
+    needs: [build, scan, publish]
+
     steps:
-       - name: Deploy to Kubernetes
+      - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/skillpulse \
             skillpulse=infhari/skillpulse:${{ github.sha }}
@@ -186,3 +188,4 @@ jobs:
       - name: Verify Deployment
         run: |
           kubectl rollout status deployment/skillpulse
+
